@@ -1,0 +1,239 @@
+/* ==========================================================================
+   KANBAN BOARD VIEW (TRELLO STYLE)
+   ========================================================================== */
+
+.board-container {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 24px;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: calc(100vh - 120px);
+}
+
+/* Kanban Column */
+.kanban-column {
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.kanban-column.drag-over {
+  border-color: var(--primary);
+  background-color: rgba(99, 102, 241, 0.05);
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+}
+
+/* Column Header */
+.column-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  user-select: none;
+}
+
+.column-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.column-pill {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--primary);
+}
+
+.column-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.column-count-badge {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+}
+
+.column-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Column Cards List */
+.column-cards-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 80px;
+}
+
+/* Task Card */
+.task-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.task-card.is-dragging {
+  opacity: 0.4;
+  cursor: grabbing;
+  border: 1px dashed var(--primary);
+}
+
+/* Card Header */
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.card-label-tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: #FFFFFF;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+/* Card Meta & Badges */
+.card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-meta-indicators {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.meta-item svg {
+  width: 13px;
+  height: 13px;
+}
+
+.meta-item.due-date.overdue {
+  color: #F87171;
+  font-weight: 600;
+}
+.meta-item.due-date.due-soon {
+  color: #FBBF24;
+  font-weight: 600;
+}
+
+.card-assignees-stack {
+  display: flex;
+  align-items: center;
+}
+.card-assignees-stack .avatar {
+  margin-left: -6px;
+  border: 2px solid var(--bg-surface-elevated);
+}
+.card-assignees-stack .avatar:first-child {
+  margin-left: 0;
+}
+
+/* Column Footer (Quick Add Task) */
+.column-footer {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quick-add-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px dashed var(--border-default);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.quick-add-btn:hover {
+  background-color: var(--bg-surface-elevated);
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+
+/* Add Column Button Card */
+.add-column-card {
+  width: 300px;
+  min-width: 300px;
+  background-color: rgba(17, 24, 39, 0.5);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.add-column-card button {
+  width: 100%;
+}
